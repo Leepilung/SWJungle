@@ -1,6 +1,10 @@
 # Flask, Pymongo, jsonify, request 패키지
 from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient 
+from flask_jwt_extended import *
+from flask import session 
+
+
 
 # ObjectId Json 파싱용 
 from bson import ObjectId
@@ -30,15 +34,21 @@ app.url_map.converters['objectid'] = ObjectIdConverter
 
 
 client = MongoClient('localhost', 27017)
-db = client.selfIntroduce
+db = client.nameHarmony
 
 
 @app.route('/')
-def home():
-    return render_template('index.html',
-    title = '으ㅏ아ㅡ아아')
+def login():
+    return render_template('login.html')
 
+@app.route('/join')
+def join():
+    return render_template('join.html')
 
+@app.route('/main')
+def main():
+    return render_template('main.html')
+    
 # get 라우트 전체출력
 @app.route('/self', methods=['GET'])
 def get():

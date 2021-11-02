@@ -38,11 +38,15 @@
           this.togglePostBox();
           break;
         case "join":
-          window.loaction.href = "http://172.17.37.172:5000/join";
+          location.replace("/join");
           break;
         case "joinSuccess":
           console.log("가입성공");
+          location.replace("/");
           break;
+        case "login":
+          location.replace("/main");
+
         default:
         // 아무것도 안함
       }
