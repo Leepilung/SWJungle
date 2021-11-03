@@ -7,17 +7,18 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <script src="{{ url_for('static', filename='nameHarmony.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Stylish&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
   </head>
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
-  <link
-    href="https://fonts.googleapis.com/css?family=Stylish&display=swap"
-    rel="stylesheet"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
-  />
   <body>
     <div class="logStatus">
       {{user_info['id']}}님이 로그인 중입니다
@@ -30,8 +31,21 @@
       </button>
     </div>
     <div class="head">찹살떡<img src="../static/image/찹살떡.png" width="80" ></img> </div>
-    <div>
-      <form id="post-box"></form>
+    <form id="post-box"></form>
+    <div class="userbox">
+      로그인 유저 정보 노출되는 부분
+      <p>사진</p>
+      <p id="userName"> {{user_info.name}}</p>
+    </div>
+    <div id="card-box">
+      카드들 쭈르륵 출력되는 부분.
+      {% for user in user_list %}
+      <div class="card" id="{{user.id}}">
+        <p>{{user.name}}</p>
+        <button>궁합점수 계산하기</button>
+        <P>궁합점수 출력파트</P>
+      </div>
+      {%endfor%}
     </div>
   </body>
 </html>
