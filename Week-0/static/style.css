@@ -3,8 +3,8 @@
 }
 
 body {
+  height: 900px;
   width: 1800px;
-  height: 1100px;
   background-image: url("./image/Highfive.png");
   background-position: right;
   background-repeat: no-repeat;
@@ -25,7 +25,7 @@ body {
 .sub-title {
   font-size: 30px;
   color: black;
-  width: 100px;
+  width: 120px;
   text-align: center;
   margin: 15px auto;
 }
@@ -62,4 +62,45 @@ body {
 
 .button-container > .card-button:last-child {
   margin-left: 10px;
+}
+
+.userbox {
+  float: left;
+  width: 500px;
+  margin: 100px auto;
+  background-color: #fff;
+  border-radius: 6 px;
+  box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%),
+    0 0 0 1px rgb(10 10 10 / 2%);
+  color: #4a4a4a;
+  display: block;
+  padding: 50px;
+}
+
+.card {
+  width: 500px;
+  height: 2 00px;
+  margin: 20px auto;
+  background-color: #fff;
+  border-radius: 6 px;
+  box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%),
+    0 0 0 1px rgb(10 10 10 / 2%);
+  color: #4a4a4a;
+  display: block;
+  padding: 50px;
+}
+
+#card-box {
+  column-count: 3;
+  column-gap: 0.75rem;
+}
+
+.cardName {
+  font-size: larger;
+  font-weight: bold;
+}
+
+.harmonyScore {
+  font-size: 30px;
+  font-weight: bold;
 }

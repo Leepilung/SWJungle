@@ -1,9 +1,9 @@
 (() => {
-  const { fetchRequest } = window;
+  const { fetchRequest, getScore } = window;
 
   const setCookie = function (name, value, exp) {
     var date = new Date();
-    date.setTime(date.getTime() + exp * 24 * 60 * 60);
+    date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
     document.cookie =
       name + "=" + value + ";expires=" + date.toUTCString() + ";path=/";
   };
@@ -18,6 +18,7 @@
     self = [];
 
     init() {
+      this.$userBox = document.querySelector(".userbox");
       this.$postBox = document.querySelector("#post-box");
       this.initEvent();
     }
@@ -28,8 +29,10 @@
     }
 
     handleClickEvents = (event) => {
+      const score = {};
       const { target } = event;
-      const { role } = target.dataset;
+      const { role, id } = target.dataset;
+      console.log("클릭이벤트", { target }, { role }, { id });
       switch (role) {
         case "register":
           alert("회원 가입 홈페이지로 이동합니다.");
@@ -51,6 +54,22 @@
           delCookie("mytoken");
           alert("로그아웃 되었습니다!");
           location.replace("/");
+        case "harmony":
+          const sortObj = [];
+          const username = this.$userBox.id;
+          const result = getScore(username, id).score;
+          score[id] = result;
+          console.log(score, id);
+          for (let number in score) {
+            sortObj.push([number, score[number]]);
+          }
+          sortObj.sort(function (a, b) {
+            return b[1] - a[1];
+          });
+          const highscorename = sortObj[0][0];
+          const highscore = sortObj[0][1];
+          console.log("하이스코어 ", highscorename, highscore);
+          document.getElementById(id).innerHTML = `궁합점수 : ${result} 점`;
       }
     };
 
@@ -66,6 +85,9 @@
       })
         .then((res) => {
           console.log(res);
+          if (res["msg"]) {
+            alert(res["msg"]);
+          }
           if (res["token"]) {
             setCookie("mytoken", res["token"], 1);
             alert("로그인 되었습니다.");

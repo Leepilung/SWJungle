@@ -198,5 +198,5 @@
     }
     return { chars, stages, score: ~~stages.slice(-1)[0].join("") };
   }
-  window.nameHarmony = { nameHarmony };
+  window.getScore = getScore;
 })();
