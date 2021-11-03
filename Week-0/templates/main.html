@@ -31,12 +31,15 @@
     <div class="head">찹살떡<img src="../static/image/찹살떡.png" width="80" ></img> </div>
     <form id="post-box"></form>
     <div class="userbox" id="{{user_info.name}}">
-      <p class="cardName" id="userName"><img src="../static/image/메인찹살떡.png" width="80" >   로그인중인 당신의 이름 : {{user_info.name}}</p>
-      <p>id : {{user_info.id}}</p>
+      <p id="userName" class="maincardName"><img src="../static/image/메인찹살떡.png" width="80" style="margin-right: 40px;" > 오늘의 모찌 : {{user_info.name}}</p>
+      <p>당신의 id : {{user_info.id}}</p>
+      <p class="maincardName" id="emoji"></p>
+      <p id="innerhtml" class="harmonyText"></p>
     </div>
     <div class="columns is-multiline is-desktop" id="card-box">
       {% for user in user_list %}
-      <form class="card column is-one-quarter" data-id="{{user.name}}">
+      <form class="card 
+       is-one-quarter" data-id="{{user.name}}">
         <p class="cardName"><img src="../static/image/서브찹살떡.png" width="80" >이름 : {{user.name}}</p>
         <button  class="button is-rounded m-3" style="height: 1.5rem " type="button" data-role="harmony" data-id="{{user.name}}">궁합점수 계산하기</button>
         <p class ="harmonyScore" id="{{user.name}}">궁합점수 : </p >

@@ -29,7 +29,6 @@
     }
 
     handleClickEvents = (event) => {
-      const score = {};
       const { target } = event;
       const { role, id } = target.dataset;
       console.log("클릭이벤트", { target }, { role }, { id });
@@ -55,21 +54,32 @@
           alert("로그아웃 되었습니다!");
           location.replace("/");
         case "harmony":
-          const sortObj = [];
+          let emoji = "";
           const username = this.$userBox.id;
           const result = getScore(username, id).score;
-          score[id] = result;
-          console.log(score, id);
-          for (let number in score) {
-            sortObj.push([number, score[number]]);
-          }
-          sortObj.sort(function (a, b) {
-            return b[1] - a[1];
-          });
-          const highscorename = sortObj[0][0];
-          const highscore = sortObj[0][1];
-          console.log("하이스코어 ", highscorename, highscore);
+          console.log(result);
           document.getElementById(id).innerHTML = `궁합점수 : ${result} 점`;
+          switch (true) {
+            case result >= 80:
+              emoji = "&#128525;";
+              break;
+            case result >= 60:
+              emoji = "&#128512;";
+              break;
+            case result >= 40:
+              emoji = "&#128528;";
+              break;
+            case result >= 20:
+              emoji = "&#128530;";
+              break;
+            default:
+              emoji = "&#128544;";
+              break;
+          }
+
+          document.getElementById(
+            "innerhtml",
+          ).innerHTML = `<p class="maincardName">상태 관계 :  ${emoji}</p> ${id}과(와)의 궁합 점수는 : ${result}점 입니다. `;
       }
     };
 
