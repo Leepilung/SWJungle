@@ -5,7 +5,6 @@
 
     init() {
       this.$postBox = document.querySelector("#post-box");
-      this.$registerBox = document.querySelector("#register-box");
       this.initEvent();
     }
 
@@ -22,17 +21,51 @@
       switch (role) {
         case "register":
           alert("회원 가입 홈페이지로 이동합니다.");
-          location.replace("/register");
+          location.replace("/join");
+          break;
+        case "registerCancle":
+          if (confirm("회원 가입을 취소하시겠습니까?")) {
+            // 확인 버튼 클릭 시 동작
+            alert("로그인 페이지로 돌아갑니다.");
+            location.replace("/");
+            break;
+          } else {
+            break;
+          }
+        case "login":
+          console.log("로그인 실행");
+          this.handleLoginEvents();
           break;
       }
     };
 
+    handleLoginEvents = () => {
+      const formData = new FormData(document.querySelector("#post-box"));
+      console.log(formData.get("id"), formData.get("password"));
+      fetchRequest("/sign_in", {
+        method: "POST",
+        body: {
+          id: formData.get("id"),
+          password: formData.get("password"),
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          if (res["token"]) {
+            setCookie;
+          }
+        })
+        .catch((res) => {
+          console.log(res);
+          alert(res["msg"]);
+        });
+    };
+
     registerSubmitEvents = (event) => {
-      console.log("register submit이벤트");
+      console.log("register submit이벤트", event);
       event.preventDefault();
       const { target } = event;
       const formData = new FormData(target);
-
       fetchRequest("/register", {
         method: "POST",
         body: {
@@ -41,25 +74,18 @@
           password: formData.get("password"),
           passwordCheck: formData.get("passwordCheck"),
         },
-      }).then((res) => {
-        console.log(res);
-      });
-
-      // default:
-      //   console.log("default 실행");
-      //   console.log({ target }, formData);
-      //   console.log(formData.get("id"), formData.get("password"));
-      //   customFetch(`/login`, {
-      //     method: "POST",
-      //     body: {
-      //       id: formData.get("id"),
-      //       password: formData.get("password"),
-      //     },
-      //   }).then((res) => {
-      //     alert("로그인에 성공하였습니다.");
-      //     // location.replace("/user_only");
-      //   });
-      //   break;
+      })
+        .then((res) => {
+          console.log("then의 res", res);
+          alert(res["msg"]);
+          if (res["msg"] == "회원가입에 성공했습니다 !") {
+            location.replace("/");
+          }
+        })
+        .catch((res) => {
+          console.log("catch의 res", res);
+          alert(res["msg"]);
+        });
     };
   }
 

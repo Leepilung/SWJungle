@@ -1,8 +1,6 @@
-
-from os import name
 from flask import Flask, flash, request, jsonify, render_template, url_for, redirect
 from pymongo import MongoClient
-from datetime import datetime
+import datetime
 import hashlib
 import jwt
 
@@ -19,69 +17,79 @@ SECRET_KEY = '8조'
 def home():
     return render_template('login.html')
 
+
+@app.route('/join')
+def join():
+    return render_template('register.html')
+
 @app.route('/register', methods=["GET", "POST"])
 def bulletin_write():
     if request.method == "POST":
-        id = request.form.get("id", type=str)
-        name = request.form.get("name", type=str)
-        password = request.form.get("password", type=str)
-        passwordCheck = request.form.get("passwordCheck", type=str)
+        id = request.json.get("id")
+        name = request.json.get("name")
+        password = request.json.get("password")
+        passwordCheck = request.json.get("passwordCheck")
 
-        if id == "":
-            flash("아이디를 입력하세요.")
-            return jsonify({'stauts':'failed','msg':'아이디를 입력하세요.'})
-        elif name =="":
-            flash("이름을 입력하세요.")
-            return render_template("register.html") 
-        elif password =="":
-            flash("비밀번호를 입력하세요.")
-            return render_template("register.html")
+        if len(id) == 0:    # 6 ~ 18
+            return jsonify({'msg':'아이디를 입력해야 합니다.'}), 400
+        elif len(id) < 4 or len(id) > 18:
+            return jsonify({'msg':'아이디의 길이를 6글자 ~ 18자로 입력해야 합니다.'}),400 
+        elif name =="": 
+            return jsonify({'msg':'이름를 입력하세요.'}), 400
+        elif len(name) > 12:
+            return jsonify({'msg' : '이름을 12자 이내로 입력해야 합니다.'})
+        elif password =="": #6~18
+            return jsonify({'msg':'비밀번호를 입력하세요.'}),400 
+        elif len(password) < 6 or len(password) > 18:
+            return jsonify({'msg':'비밀번호의 길이를 6글자 ~ 18자로 입력해야 합니다.'}),400 
         elif passwordCheck == "":
-            flash('비밀번호 확인을 해주세요')
-            return render_template("register.html")
+            return jsonify({'msg':'비밀번호를 확인 해주세요'}),400 
         elif password != passwordCheck:
-            flash("비밀번호가 다릅니다.")
-            return render_template("register.html")
+            return jsonify({'msg':'비밀번호가 서로 다릅니다.'}),400 
 
+    
 
         check_cnt = db.users.find({"id" : id}).count()
         if check_cnt > 0:
-            flash("이미 등록된 id입니다.")
-            return render_template("register.html")
+            return jsonify({'msg':'이미 등록된 id입니다.'})
             
-        to_db = {
+        to_DB = {
             "id" : id,
-            "pw" : hashlib.sha256(password.encode('utf-8')).hexdigest(),
+            "password" : hashlib.sha256(password.encode('utf-8')).hexdigest(),
             "name" : name,
         }
 
-        db.users.insert_one(to_db)
+        db.users.insert_one(to_DB)
        
-        flash("회원 가입이 되었습니다!")
-        return render_template("login.html") 
+        return jsonify({'msg' : '회원가입에 성공했습니다 !'})
     else:
         return render_template("register.html")
 
 @app.route('/sign_in', methods=['POST'])
 def sign_in_user():
-    email_receive = request.form['email_give']
-    password_receive = request.form['password_give']
+    id_receive = request.json.get("id")
+    password_receive = request.json.get("password")
     password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
-    result = db.users.find_one({'email': email_receive, 'password': password_hash})
+    result = db.users.find_one({'id': id_receive, "password": password_hash})
+
+    print("result 결과값 : ",result)
+
     if result is not None :
         payload = {
-            'ID': email_receive,
-            'NAME': result['username'],
+            'ID': id_receive,
+            'NAME': result['name'],
             'EXP': str(datetime.datetime.utcnow() + datetime.timedelta(seconds = 60 * 60 * 24))
         }
+        print("페이로드(payload) : ",payload)
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        return jsonify({'resul': 'success', 'token': str(token)})
+        print("토근값(token) : ",token)
+        return jsonify({'result': 'success', 'token': str(token)})
     else :
-        return jsonify({'result': 'fail', 'message': 'E-mail/Password가 정확하지 않습니다.'})
+        return jsonify({'result': 'fail', 'msg': 'ID / Password가 정확하지 않습니다.'}),400
 
 
-@app.route('/asda')
-def cookiehome():
+@app.route('/login')
+def tokenHome():
     token_receive = request.cookies.get('mytoken')
     if token_receive is not None :
         token_receive = bytes(token_receive[2:-1].encode('ascii'))

@@ -12,8 +12,9 @@
       ...(option.body && {
         body: JSON.stringify(option.body),
       }),
-    }).then((res) => {
-      res.json;
+    }).then(async (res) => {
+      const result = await res.json();
+      return result;
     });
   };
 
