@@ -15,17 +15,15 @@ SECRET_KEY = '8조'
 @app.route('/')
 def Home():
     token_receive = request.cookies.get('mytoken')
-    print("토큰 리시브의 값 :",token_receive)
-    print("---------------------------------------------------")
+
 
     if token_receive is not None :
         token_receive = bytes(token_receive.encode('ascii'))
-        print('2번째 토큰 리시브 값 : ', token_receive)
-        print("---------------------------------------------------")
+
         try:
             payload= jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
             print("페이로드 값 :",payload,type(payload))
-            user_info = db.users.find_one({'email': payload['ID']})
+            user_info = db.users.find_one({'id': payload['ID']})
             print("유저 인포의 값 : ",user_info)
             return render_template('main.html', user_info=user_info)
         except jwt.ExpiredSignatureError:
@@ -88,23 +86,18 @@ def sign_in_user():
     password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     result = db.users.find_one({'id': id_receive, "password": password_hash})
 
-    print("result 결과값 : ",result)
 
     if result is not None :
         payload = {
             'ID': id_receive,
             'NAME': result['name'],
-            'EXP': str(datetime.datetime.utcnow() + datetime.timedelta(seconds = 60 * 60 * 24))
+            'EXP': str(datetime.datetime.utcnow() + datetime.timedelta(seconds = 60 * 60 * 24*1000))
         }
-        print("페이로드(payload) : ",payload)
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        print("토근값(token) : ",token)
-        print("---------------------------------------------------")
+
         return jsonify({'result': 'success', 'token': str(token)})
     else :
         return jsonify({'result': 'fail', 'msg': 'ID / Password가 정확하지 않습니다.'}),400
-
-
 
 
 if __name__ == "__main__":
