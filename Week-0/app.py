@@ -1,9 +1,7 @@
-from flask import Flask, flash, request, jsonify, render_template, url_for, redirect
+from flask import Flask, request, jsonify, render_template, url_for, redirect
 from pymongo import MongoClient
 import datetime,hashlib,jwt
-from werkzeug.security import generate_password_hash, check_password_hash
 
-import flask_jwt_extended
 
 app = Flask(__name__)
 
@@ -19,13 +17,18 @@ def Home():
 
     if token_receive is not None :
         token_receive = bytes(token_receive.encode('ascii'))
-
+        user_list = []
         try:
             payload= jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-            print("페이로드 값 :",payload,type(payload))
             user_info = db.users.find_one({'id': payload['ID']})
-            print("유저 인포의 값 : ",user_info)
-            return render_template('main.html', user_info=user_info)
+            early_list = list(db.users.find({},{"_id":False,"password":False})) 
+            for i in early_list:
+                if i['id'] == payload['ID']:
+                    continue
+                else:
+                    user_list.append(i)
+
+            return render_template('main.html', user_info=user_info, user_list=user_list)
         except jwt.ExpiredSignatureError:
             return redirect(url_for('/', message = '로그인 시간이 만료되었습니다.'))
     else :
@@ -61,7 +64,6 @@ def bulletin_write():
             return jsonify({'msg':'비밀번호가 서로 다릅니다.'}),400 
 
     
-
         check_cnt = db.users.find({"id" : id}).count()
         if check_cnt > 0:
             return jsonify({'msg':'이미 등록된 id입니다.'})
