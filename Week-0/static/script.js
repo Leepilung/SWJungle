@@ -1,5 +1,17 @@
 (() => {
   const { fetchRequest } = window;
+
+  const setCookie = function (name, value, exp) {
+    var date = new Date();
+    date.setTime(date.getTime() + exp * 24 * 60 * 60);
+    document.cookie =
+      name + "=" + value + ";expires=" + date.toUTCString() + ";path=/";
+  };
+
+  const getCookie = function (name) {
+    var value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
+    return value ? value[2] : null;
+  };
   class Self {
     self = [];
 
@@ -52,7 +64,12 @@
         .then((res) => {
           console.log(res);
           if (res["token"]) {
-            setCookie;
+            setCookie("mytoken", res["token"], 1);
+            const tokenCookie = getCookie("mytoken");
+            console.log("쿠키 is_expend변수에 저장된 값: " + tokenCookie);
+            console.log("토큰쿠키 값 : " + tokenCookie);
+            alert("로그인 되었습니다.");
+            location.replace("/");
           }
         })
         .catch((res) => {
