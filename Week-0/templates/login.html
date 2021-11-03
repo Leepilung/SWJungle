@@ -1,8 +1,3 @@
-​ {% with messages = get_flashed_messages() %} {% if messages %}
-<script type="text/javascript">
-  alert("{{messages[-1]}}");
-</script>
-{% endif %} {% endwith %} ​ ​
 <!DOCTYPE html>
 <html>
   <head>
@@ -24,46 +19,54 @@
     />
   </head>
   <body>
-    <div class="title">찹살떡</div>
-    <form id="post-box" class="form-post">
+    <div class="head">찹살떡<img src="../static/image/찹살떡.png" width="80" ></img> </div>
+    <form id="post-box" class="box">
       <div>
+        <p class="sub-title">접속창</p>
         <div class="form-group">
           <label for="post-id">ID</label>
           <input
             type="text"
             name="id"
-            class="form-control"
+            class="input is-small"
             placeholder="아이디를 입력하세요"
           />
         </div>
         <div class="form-group">
           <label for="post-comment">PASSWORD</label>
           <input
+            class="input is-small"
             type="password"
             name="password"
             placeholder="패스워드를 입력하세요"
           />
         </div>
-        <button
-          type="button"
-          data-role="register"
-          name="register"
-          id="register"
-          class="btn btn-primary"
-        >
-          회원가입
-        </button>
-        <button
-          type="button"
-          data-role="login"
-          name="login"
-          id="login"
-          class="btn"
-        >
-          로그인
-        </button>
+        <div class="button-container">
+          <button
+            type="button"
+            data-role="register"
+            name="register"
+            id="register"
+            class="button is-outlined mr-3"
+          >
+            회원가입
+          </button>
+          <button
+            type="button"
+            data-role="login"
+            name="login"
+            id="login"
+            class="button is-outlined"
+          >
+            로그인
+          </button>
+        </div>
       </div>
     </form>
+    <div style="position: absolute;">
+      <div class="rice" style="position: relative; top: 120px; left: 400px; ">
+      </div>
+    </div>
   </body>
   <script src="{{ url_for('static', filename='fetch.js') }}"></script>
   <script src="{{ url_for('static', filename='script.js') }}"></script>

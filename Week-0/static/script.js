@@ -8,9 +8,11 @@
       name + "=" + value + ";expires=" + date.toUTCString() + ";path=/";
   };
 
-  const getCookie = function (name) {
-    var value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
-    return value ? value[2] : null;
+  const delCookie = function delCookie_by_name(name) {
+    let date = new Date();
+    date.setDate(date.getDate() - 100);
+    let Cookie = `${name}=;Expires=${date.toUTCString()}`;
+    document.cookie = Cookie;
   };
   class Self {
     self = [];
@@ -27,9 +29,7 @@
 
     handleClickEvents = (event) => {
       const { target } = event;
-      console.log({ target });
       const { role } = target.dataset;
-      console.log("클릭이벤트 : ", { role });
       switch (role) {
         case "register":
           alert("회원 가입 홈페이지로 이동합니다.");
@@ -45,9 +45,12 @@
             break;
           }
         case "login":
-          console.log("로그인 실행");
           this.handleLoginEvents();
           break;
+        case "logout":
+          delCookie("mytoken");
+          alert("로그아웃 되었습니다!");
+          location.replace("/");
       }
     };
 
@@ -65,9 +68,6 @@
           console.log(res);
           if (res["token"]) {
             setCookie("mytoken", res["token"], 1);
-            const tokenCookie = getCookie("mytoken");
-            console.log("쿠키 is_expend변수에 저장된 값: " + tokenCookie);
-            console.log("토큰쿠키 값 : " + tokenCookie);
             alert("로그인 되었습니다.");
             location.replace("/");
           }

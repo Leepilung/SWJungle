@@ -24,15 +24,30 @@
     <title>회원가입 홈페이지</title>
   </head>
   <body>
-    <h1 class="title">찹살떡</h1>
-    <form id="post-box" class="form-post">
+    <div class="head">찹살떡<img src="../static/image/찹살떡.png" width="80" ></img> </div>
+    <form id="post-box" class="box">
       <p>
-        ID : <input type="text" name="id" placeholder="글자 수 4~18자 사이" />
+        ID :
+        <input
+          class="input is-small"
+          type="text"
+          name="id"
+          placeholder="글자 수 4~18자 사이"
+        />
       </p>
-      <p>이름 : <input type="text" name="name" placeholder="12자 이내" /></p>
+      <p>
+        이름 :
+        <input
+          class="input is-small"
+          type="text"
+          name="name"
+          placeholder="12자 이내"
+        />
+      </p>
       <p>
         비밀번호 :
         <input
+          class="input is-small"
           type="password"
           name="password"
           placeholder="글자 수 6~18자 사이"
@@ -41,13 +56,24 @@
       <p>
         비밀번호 확인 :
         <input
+          class="input is-small"
           type="password"
           name="passwordCheck"
           placeholder="글자 수 6~18자 사이"
         />
       </p>
-      <button type="submit">가입 완료</button>
-      <button type="button" data-role="registerCancle">취소</button>
+      <div class="button-container">
+        <button class="button is-info is-outlined mr-3" type="submit">
+          가입 완료
+        </button>
+        <button
+          class="button is-danger is-outlined"
+          type="button"
+          data-role="registerCancle"
+        >
+          취소
+        </button>
+      </div>
     </form>
   </body>
   <script src="{{ url_for('static', filename='fetch.js') }}"></script>
