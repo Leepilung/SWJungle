@@ -1,0 +1,28 @@
+<!DOCTYPE htmll>
+<html lang="ko">
+  ​
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>테스트1</title>
+  </head>
+  ​ {% with messages = get_flashed_messages() %} {% if messages %}
+  <script>
+    alert("{{messages[-1]}}");
+  </script>
+  {% endif %} {% endwith %} ​ ​
+  <body>
+    <form action="/register" method="POST">
+      <p>ID : <input type="text" name="id" /></p>
+      <p>PW : <input type="password" name="pw" /></p>
+      <p>pwchk : <input type="password" name="pwchk" /></p>
+      <p>name : <input type="text" name="name" /></p>
+      <p><input type="submit" data-role="registerSuccess" value="submit" /></p>
+    </form>
+  </body>
+  ​
+</html>

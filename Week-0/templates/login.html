@@ -1,7 +1,12 @@
+​ {% with messages = get_flashed_messages() %} {% if messages %}
+<script type="text/javascript">
+  alert("{{messages[-1]}}");
+</script>
+{% endif %} {% endwith %} ​ ​
 <!DOCTYPE html>
 <html>
   <head>
-    <title>0주차</title>
+    <title>로그인 홈페이지</title>
     <meta charset="utf-8" />
     <link
       rel="stylesheet"
@@ -24,13 +29,28 @@
       <div>
         <div class="form-group">
           <label for="post-id">ID</label>
-          <input name="id" id="post-id" class="form-control" placeholder="" />
+          <input
+            name="id"
+            id="post-id"
+            class="form-control"
+            placeholder="아이디를 입력하세요"
+          />
         </div>
         <div class="form-group">
           <label for="post-comment">PASSWORD</label>
-          <input name="password" id="post-password" placeholder="" />
+          <input
+            type="password"
+            name="password"
+            id="post-password"
+            placeholder="패스워드를 입력하세요"
+          />
         </div>
-        <button data-role="join" name="join" id="join" class="btn btn-primary">
+        <button
+          data-role="register"
+          name="register"
+          id="register"
+          class="btn btn-primary"
+        >
           회원가입
         </button>
         <button
