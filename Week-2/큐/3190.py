@@ -14,7 +14,7 @@ board = [[1]*(N+2)] + [[1]+[0]*N+[1] for _ in range(N)] + [[1]*(N+2)]
 
 for i in range(K):
     r,c = map(int, sys.stdin.readline().split()) 
-    board[r][c] = 'A'
+    board[r][c] = 'Apple'
     
 L = int(sys.stdin.readline()) 
 instruction = list(map(lambda x:[int(x[0]), x[1]], [sys.stdin.readline().split() for _ in range(L)]))
@@ -32,7 +32,7 @@ while(1):
     x = x + direction[d][0]
     y = y + direction[d][1]
     
-    if board[x][y] == 'A':
+    if board[x][y] == 'Apple':
         board[x][y] = 3 
         snake_position.append([x, y]) 
         time = time + 1

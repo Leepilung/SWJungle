@@ -15,6 +15,6 @@ def divmod(A,B,C):
         ans = divmod(A,B//2,C)
         if B % 2 == 0:
             return ans**2 % C
-        else: return ans**2 * A % C
+        else: return ans**2 * A % C     # (A%C) * (A%C) * (A%C)
 
 print(divmod(A,B,C))

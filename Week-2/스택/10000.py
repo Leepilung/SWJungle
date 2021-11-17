@@ -12,7 +12,7 @@ points = []
 for _ in range(N):
     x, r =list(map(int, sys.stdin.readline().split()))
     points.append(["{", x - r, 0, 0])  #괄호, 좌표, 상태(이어지면 1 아니면 0), 이어진 원 지름 길이의 합  
-    points.append(["}", x + r, 0, 0])
+    points.append([")", x + r, 0, 0])
 points.sort(key=lambda x:(x[1], x[0])) 
 
 stack = []
