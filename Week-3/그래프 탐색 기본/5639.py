@@ -24,4 +24,4 @@ def postorder(arr):
 
 arr = postorder(arr)
 for i in arr:
-  print(i)`
+  print(i)
