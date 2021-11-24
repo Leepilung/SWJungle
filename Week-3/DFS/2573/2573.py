@@ -1,8 +1,8 @@
 # 백준 알고리즘 - 2573 빙산
 # https://www.acmicpc.net/problem/2573
-# 시도 횟수 : 
-# 실패 : 
-# 통과 : 
+# 시도 횟수 : 8
+# 실패 : 7
+# 통과 : 1
 
 import sys,copy
 input = sys.stdin.readline

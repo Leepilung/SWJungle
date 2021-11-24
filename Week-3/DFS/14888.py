@@ -1,8 +1,8 @@
 # 백준 알고리즘 - 14888 연산자 끼워넣기
 # https://www.acmicpc.net/problem/14888
-# 시도 횟수 : 
-# 실패 : 
-# 통과 : 
+# 시도 횟수 : 1
+# 실패 : 0
+# 통과 : 1
 
 import sys
 input = sys.stdin.readline
