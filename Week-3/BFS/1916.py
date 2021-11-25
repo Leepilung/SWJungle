@@ -29,9 +29,9 @@ def dijkstra(start):
             continue
         for i in graph[now]:
             cost = current_distance + i[1]
-        if cost < distance[i[0]]:
-            distance[i[0]] = cost
-            heapq.heappush(queue, (cost, i[0]))
+            if cost < distance[i[0]]:
+                distance[i[0]] = cost
+                heapq.heappush(queue, (cost, i[0]))
 
     return distance
 
