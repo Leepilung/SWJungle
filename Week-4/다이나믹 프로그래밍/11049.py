@@ -1,3 +1,9 @@
+# 백준 알고리즘 - 11049 행렬 곱셈 순서
+# https://www.acmicpc.net/problem/11049
+# 시도 횟수 : 
+# 실패 : 
+# 통과 : 
+
 import sys
 input = sys.stdin.readline
 n = int(input())

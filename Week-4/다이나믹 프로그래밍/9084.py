@@ -18,6 +18,6 @@ for i in range(T):
     for i in coins: # 코인 하나씩 꺼내옴
         for j in range(1,money+1):
             if j - i >= 0:  # 꺼내온 코인의 사용가능 유무 판단 로직
-                 dp[j] += dp[j - i]
+                dp[j] += dp[j - i]
     print(dp[money])
 
