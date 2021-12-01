@@ -5,7 +5,7 @@
 # 통과 : 
 
 import sys
-input = sys.stdin.raedline()
+input = sys.stdin.readline
 formula = input().split('-')
 ans = 0
 

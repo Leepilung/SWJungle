@@ -1,5 +1,5 @@
 # 백준 알고리즘 - 11053 가장 긴 증가하는 부분 수열
-# https://www.acmicpc.net/problem/
+# https://www.acmicpc.net/problem/11053
 # 시도 횟수 : 
 # 실패 : 
 # 통과 : 

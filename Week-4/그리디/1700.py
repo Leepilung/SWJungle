@@ -8,7 +8,6 @@ import sys
 input = sys.stdin.readline
 
 N, K = map(int, input().split())
-
 multitap = list(map(int, input().split()))
 
 plugs = []
@@ -28,6 +27,7 @@ for i in range(K):
 
     for j in range(N): 
     # 멀티탭 안에 플러그 값이 있다면
+        tmp = multitap[i:]
         if plugs[j] in multitap[i:]:
             # 멀티탭 인덱스 위치 값 가져오기.
             multitap_idx = multitap[i:].index(plugs[j])
